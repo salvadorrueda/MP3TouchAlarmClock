@@ -1,5 +1,6 @@
+#include "MP3TAC_RTC.h"  // Including RTC DS1307 (Real Time Clock) functions.
+#include "MP3TAC_TTFT.h" // Including Touth TFT functions.
 
-#include "MP3TAC_TTFT.h"
 
 #define esp8266 Serial3 // Connect to Internet with an ESP8266 E12 board.
 
@@ -22,13 +23,18 @@ void setup()
   myGLCD.setBackColor(0, 0, 255);
   //drawButtons();  
   drawBorder();
+  rtctime=getTime();
+  Serial.print("rtctime.Hour: ");
+  Serial.print(rtctime.Hour);
   drawTime();
 }
 
 
 
+
 void loop()
 {
+
 
 // Reading from esp8266 and printing on Serial
 if(esp8266.available()){
@@ -57,4 +63,7 @@ if(esp8266.available()){
     }
   
 }
+
+
+
 

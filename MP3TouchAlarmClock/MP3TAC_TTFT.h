@@ -59,25 +59,23 @@ char stLast[20]="";
 **   Custom functions   **
 *************************/
 void drawTime(){
-  /*
-  myGLCD.setColor(0,255,255); // Set the color to cyan
-  myGLCD.drawPixel(0,0);
-  //myGLCD.drawPixel(320,240);
-   myGLCD.setColor(255,0,0);
-   myGLCD.drawPixel(0,237);
-   
-   //myGLCD.setColor(0,255,0);
-   myGLCD.setColor(0,255,255); // Set the color to cyan
-   myGLCD.drawPixel(0,240);
-  */
+
   myGLCD.setFont(SevenSegNumFontPlus);
 //  myGLCD.setFont(BigFont);
   myGLCD.setColor(0, 255, 0);
   myGLCD.setBackColor(0, 0, 0);
-  //myGLCD.printNumI(066,CENTER,100); // 54 ??
-  //myGLCD.printNumF(3.43,2,CENTER,100,':');
-  myGLCD.print("21:44",CENTER,100);
+  
+  //myGLCD.print("21:44",CENTER,100);
+  String Hour = String(rtctime.Hour);
+  String Minute = "";
+  if(rtctime.Minute<10) Minute = "0"+String(rtctime.Minute);
+  else Minute = String(rtctime.Minute);
+  
+  myGLCD.print(Hour+":"+Minute,CENTER,100);
   }
+
+
+
 void drawBorder(){
   
    myGLCD.fillRoundRect (5, 5, 315, 235); // draw Gray Round Rectangle
