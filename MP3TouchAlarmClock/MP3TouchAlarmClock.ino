@@ -2,6 +2,7 @@
 #include "MP3TAC_TTFT.h" // Including Touth TFT functions.
 
 
+
 #define esp8266 Serial3 // Connect to Internet with an ESP8266 E12 board.
 
 
@@ -11,8 +12,8 @@ void setup()
 
   Serial.begin(115200);
   Serial3.begin(115200);
-  
-  
+
+   
   myGLCD.InitLCD();
   myGLCD.clrScr();
 
@@ -24,16 +25,22 @@ void setup()
   //drawButtons();  
   drawBorder();
   rtctime=getTime();
-  Serial.print("rtctime.Hour: ");
-  Serial.print(rtctime.Hour);
   drawTime();
 }
 
 
+unsigned long lastTime= millis();
 
 
 void loop()
 {
+  // Update time each minute.
+  if(millis() - lastTime >= 60000) {
+  lastTime = millis();
+  
+  rtctime=getTime();
+  drawTime();  
+}
 
 
 // Reading from esp8266 and printing on Serial
@@ -45,9 +52,7 @@ if(esp8266.available()){
 }
 
 
-
 // Printing on Screen the touching position.
-
     if (myTouch.dataAvailable())
     {
       myTouch.read();
@@ -58,8 +63,7 @@ if(esp8266.available()){
        myGLCD.setFont(SmallFont);
       myGLCD.print(String("x:") + x + String("y:") + y, CENTER, 192);
        
-     Serial.println(String("x:") + x + String("y:") + y);     
-     
+     Serial.println(String("x:") + x + String("y:") + y);         
     }
   
 }
